@@ -10,5 +10,8 @@
 
 @interface ViewController : UIViewController
 
+@property(nonatomic) int maxTap;
+@property(nonatomic) int currentTap;
+
 @end
 

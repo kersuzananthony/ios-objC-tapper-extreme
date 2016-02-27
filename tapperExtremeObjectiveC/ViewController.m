@@ -20,12 +20,11 @@
 
 @implementation ViewController
 
-NSInteger maxTap = 0;
-NSInteger currentTap = 0;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    // Initialize data
+    [self startGame];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,7 +37,7 @@ NSInteger currentTap = 0;
     if ([self.textField.text isEqualToString:@""]) {
         NSLog(@"No input found!");
     } else {
-        maxTap = [self.textField.text integerValue];
+        self.maxTap = [self.textField.text integerValue];
         
         self.textField.hidden = YES;
         self.playButton.hidden = YES;
@@ -54,7 +53,7 @@ NSInteger currentTap = 0;
 
 - (IBAction)coinPressed:(UIButton *)sender {
     
-    currentTap++;
+    self.currentTap++;
     [self updateTextlabel];
     
     if ([self isGameOver]) {
@@ -62,19 +61,10 @@ NSInteger currentTap = 0;
     }
 }
 
-
-
-
-
-
-
-
-
 - (void) startGame {
-
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL: [NSURL URLWithString:@"http://www.google.com"]]];
     
-    currentTap = 0;
+    self.currentTap = 0;
+    self.maxTap = 0;
     
     self.coinButton.hidden = YES;
     self.textLabel.hidden = YES;
@@ -89,12 +79,12 @@ NSInteger currentTap = 0;
 }
 
 - (void)updateTextlabel {
-    self.textLabel.text = [NSString stringWithFormat:@"%ld Taps", (long)currentTap];
+    self.textLabel.text = [NSString stringWithFormat:@"%d Taps", self.currentTap];
 }
 
 -(BOOL) isGameOver {
     
-    if (currentTap >= maxTap) {
+    if (self.currentTap >= self.maxTap) {
         return YES;
     } else {
         return NO;
